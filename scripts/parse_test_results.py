@@ -15,7 +15,7 @@ for ts in root.findall("testsuite"):
 passed = total - failures - errors - skipped
 
 summary = (
-    f"🧪 *Test Report by Ashish*:\n"
+    f"🧪 *Test Report by Smriti*:\n"
     f"✅ Passed: {passed}\n"
     f"❌ Failed: {failures + errors}\n"
     f"⚠️ Skipped: {skipped}\n"
