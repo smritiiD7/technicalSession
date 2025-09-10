@@ -19,7 +19,8 @@ summary = (
     f"✅ Passed: {passed}\n"
     f"❌ Failed: {failures + errors}\n"
     f"⚠️ Skipped: {skipped}\n"
-    f"📊 Total: {total}"
+    f"📊 Total: {total}\n"
+    f"🌿 Branch: branchAddition"
 )
 
 with open("slack_msg.txt", "w") as f:
