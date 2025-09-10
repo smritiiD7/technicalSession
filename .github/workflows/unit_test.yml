@@ -1,4 +1,4 @@
-name: Unit-Test pipeline and publish results
+name: Unit-Test pipeline and publish results # Workflow name
 
 on:
   workflow_dispatch:   # manual run
@@ -7,12 +7,12 @@ on:
       - main
 
 jobs:
-  unit-tests-job:
-    runs-on: ubuntu-latest
+  unit-tests-job: # name of the job
+    runs-on: ubuntu-latest # VM on which this pipeline is currently running
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  # official checkout action by Github Action
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -22,9 +22,9 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install -e .
+          pip install -e .  
 
-      - name: Run tests and generate JUnit XML
+      - name: Run tests and generate JUnit XML # executing test cases
         run: |
           pytest --junitxml=report.xml || true
 
@@ -32,12 +32,12 @@ jobs:
         id: parse
         run: |
           python scripts/parse_test_results.py
-          # read the message content
+          branch=${{ github.ref_name }} 
+          echo "Branch: $branch" >> slack_msg.txt  # append branch info
           msg=$(cat slack_msg.txt)
           echo "slack_message<<EOF" >> $GITHUB_OUTPUT
           echo "$msg" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
-
 
       - name: Show Slack message (debug)
         run: cat slack_msg.txt
