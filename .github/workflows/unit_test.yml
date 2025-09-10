@@ -31,13 +31,14 @@ jobs:
       - name: Parse test results
         id: parse
         run: |
-          python scripts/parse_test_results.py
-          branch=${{ github.ref_name }} 
-          echo "Branch: $branch" >> slack_msg.txt  # append branch info
+          python scripts/parse_test_results.py > slack_msg.txt
+          echo "Branch: $BRANCH_NAME" >> slack_msg.txt
           msg=$(cat slack_msg.txt)
           echo "slack_message<<EOF" >> $GITHUB_OUTPUT
           echo "$msg" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
+        env:
+          BRANCH_NAME: ${{ github.ref_name }}   # branch available to Python
 
       - name: Show Slack message (debug)
         run: cat slack_msg.txt

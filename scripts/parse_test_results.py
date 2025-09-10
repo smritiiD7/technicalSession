@@ -1,4 +1,7 @@
 import xml.etree.ElementTree as ET
+import os
+
+branch = os.getenv("BRANCH_NAME", "unknown")
 
 tree = ET.parse("report.xml")
 root = tree.getroot()
@@ -20,7 +23,7 @@ summary = (
     f"❌ Failed: {failures + errors}\n"
     f"⚠️ Skipped: {skipped}\n"
     f"📊 Total: {total}\n"
-    f"🌿 Branch: branchAddition"
+    f"🌿 Branch:{branch}"
 )
 
 with open("slack_msg.txt", "w") as f:
